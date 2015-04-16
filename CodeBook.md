@@ -22,7 +22,7 @@ The flow of the code follows naturally from Top to Bottom. However, explainatory
 
 #####RETRIEVE UCI HAR DATASET
   
-Constant `uci_har_dir` is set to `"./UCI HAR Dataset"` which is the directory that the zip-file would create in the working directory (i.e., getwd()) and extract the complete dataset to. All associated sub-directories and data files will 
+Constant `uci.harDir` is set to `"./UCI HAR Dataset"` which is the directory that the zip-file would create in the working directory (i.e., getwd()) and extract the complete dataset to. All associated sub-directories and data files will 
 
 If the `"./UCI HAR Dataset"` directory does not exist and thus result in the`file.exists()` logic turns `FALSE` (i.e., no such directory exists in the working directory), the UCI HAR zip-file containing the data will be unzipped.
 
@@ -37,7 +37,7 @@ The UCI HAR zip-file extraction will create the following directory structure (i
 
 #####RESULT DIRECTORY
   
-`results_dir`defines the "results" directory `"./results"` in which intermediate and final results will be written to.`"./results`" will be created in the working directory.
+`resultsDir`defines the "results" directory `"./results"` in which intermediate and final results will be written to.`"./results`" will be created in the working directory.
 
 `file.exist(results_dir)` logic checks whether directory already exist. If the directory does not exist `dir.create(results_dir)` will create the directory. If the directory `"./results"` already exist the code jumps over this step and continues.
   
@@ -45,16 +45,16 @@ The UCI HAR zip-file extraction will create the following directory structure (i
   
 This section associate constants with the various UCI HAR Datasets as follows;
 
-* `activity_file` equals file path to and name of the dataset, i.e., `"activity_labels.txt"` to be found in `./"UCI HAR Dataset"`).
+* `activity.file` equals file path to and name of the dataset, i.e., `"activity_labels.txt"` to be found in `./"UCI HAR Dataset"`).
 * `activity`is a `data.frame` containing the data from `"activity_labels.txt"` and contains to columns `"Label"` id and the associated 6 types of "measured" activity `"Activity"` (i.e., 1 WALKING, 2 WALKING UPSTAIRS 3 WALKING DOWNSTAIRS 4 SITTING 5 STANDING and 6 LAYING).
-* `header_file` equals `"features.txt"`in `./"UCI HAR Dataset"`
-* `head_data`is the `data.frame` read from `"features.txt"`, and contains all measurements related to _Subject_ and _Activity_.
+* `header.file` equals `"features.txt"`in `./"UCI HAR Dataset"`
+* `headData`is the `data.frame` read from `"features.txt"`, and contains all measurements related to _Subject_ and _Activity_.
 
 In the following _test/train_ simply means that the code is the same whether the file comes from the `"./UCI HAR Dataset/test"` or the `"./UCI HAR Dataset/train"` directories. In the code itself it is of course either _test_ or _train_.  
 
-* `subj_test/train_file` equals `"subject_test/train.txt"` that contains the Subject id (i.e., 1 to 30).
-* `y_test/train_file` equals `"y_test/train.txt"` that contains activity label id.
-* `x_test/train_file` equals `"x_test/train.txt"` containing all measurements identified by type in '"features.txt"`.
+* `subj.test/trainFile` equals `"subject_test/train.txt"` that contains the Subject id (i.e., 1 to 30).
+* `y.test/trainFile` equals `"y_test/train.txt"` that contains activity label id.
+* `x.test/trainFile` equals `"x_test/train.txt"` containing all measurements identified by type in '"features.txt"`.
   
 #####RETRIEVE THE DATA
 
