@@ -1,8 +1,9 @@
-# Code Book
-### Course Project
-#### Getting and Cleaning Data (getdata-013)
-#### April 2015
+#Code Book
+###Course Project
+####Getting and Cleaning Data (getdata-013)
+#####April 2015
 
+#####INTRODUCTION
 This CodeBook provides the background for understanding how the `run_analysis.R` works.
 The code does not contain any user defined functions and utilizes the standard packages of R.
 
@@ -11,9 +12,13 @@ the "UCI HAR Dataset" or just __the data__.
 
 The flow of the code follows naturally from Top to Bottom. However, explainatory comments breaks up the code in major functional segments as follows;
 
-1. Unzip/install the UCI HAR Dataset to `"./UCI HAR Dataset"`. Unless the `"./UCI HAR Dataset" already exist in your working directory, __in which cases the code assumes that the datasets have been installed correctly__.
-2. Create `"./results"` directory where intermediate and final text files can be written to.
-3. Define the data directories and file related constants.
-4. Download and read the data files.
-5. Data reshaping & tidying.
-6. Write the in the project specified tidy dataset `"tidy_mean&std.txt"`to `"./results"` directory.
+* Unzip/install the UCI HAR Dataset to `"./UCI HAR Dataset"`. Unless the `"./UCI HAR Dataset" already exist in your working directory, __in which cases the code assumes that the datasets have been installed correctly__.
+* Create `"./results"` directory where intermediate and final text files can be written to.
+* Define the data directories and file related constants.
+* Download and read the data files.
+* Data reshaping & tidying.
+* Write the in the project specified tidy dataset `"tidy_mean&std.txt"`to `"./results"` directory.
+
+
+#####AKNOWLEDGEMENT
+
