@@ -11,7 +11,7 @@ This repo contains one R-code script named `run_analysis.R`in line with the Proj
 1. Code will retrieve/unzip UCI HAR Dataset unless it already has been installed/unzipped
 2. Reads the UCI HAR Datasets.
 3. Creates a "results" directory (`"./results"`) where intermediate or final results can be written to.
-4. Consolidate all measurement data in 1 `data.frame`
+4. Consolidate all measurement data into 1 single `data.frame`
 5. Inserts explanatory measurement `headers` and corresponding variable `labels` (numeric as well as descriptive).
 6. Extracting a sub-set of measurements.
 7. Tidy the data-set (e.g., see also Hadley Wickham ["Tidy Data" article](http://vita.had.co.nz/papers/tidy-data.pdf)).
