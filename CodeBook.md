@@ -19,6 +19,17 @@ The flow of the code follows naturally from Top to Bottom. However, explainatory
 * Data reshaping & tidying.
 * Write the in the project specified tidy dataset `"tidy_mean&std.txt"`to `"./results"` directory.
 
+#####RETRIEVE UCI HAR DATASET
+
+#####RESULT DIRECTORY
+
+#####CONSTANTS
+
+#####RETRIEVE THE DATA
+
+#####DATA RESHAPING & TIDYING
+
+#####WRITING PROJECT SPECIFIED TIDY FILE
 
 #####AKNOWLEDGEMENT
 ___Reference___: [_Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. A Public Domain Dataset for Human Activity Recognition Using Smartphones. 21th European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning, ESANN 2013. Bruges, Belgium 24-26 April 2013_.](https://www.elen.ucl.ac.be/Proceedings/esann/esannpdf/es2013-84.pdf)
