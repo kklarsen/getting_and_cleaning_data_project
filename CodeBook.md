@@ -18,13 +18,19 @@ The flow of the code follows naturally from Top to Bottom. However, explainatory
 * Download and read the data files.
 * Data reshaping & tidying.
 * Write the in the project specified tidy dataset `"tidy_mean&std.txt"`to `"./results"` directory.
+  
 
 #####RETRIEVE UCI HAR DATASET
+  
+
 
 #####RESULT DIRECTORY
-
+  
+  
+  
 #####CONSTANTS
-
+  
+  
 #####RETRIEVE THE DATA
 
 #####DATA RESHAPING & TIDYING
