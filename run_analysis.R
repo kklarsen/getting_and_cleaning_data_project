@@ -1,28 +1,47 @@
-#Coursera Getting & Cleaning Data (getdata-013)
-#Course Project
-#Author: Kim Kyllesbech Larsen
-#Email: kim.k.larsen@hotmail.com
+# Coursera Getting and Cleaning Data (getdata-013)
+# Course Project
+# April 2014
+# Author: Kim Kyllesbech Larsen
+# Email: kim.k.larsen@hotmail.com
 #
-#R script to load & tidy the UCI HAR dataset
-#dataset source https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+# R script to load & tidy the UCI HAR dataset
+# dataset source https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+
+#Define UCI HAR Dataset directory
+
+uci_har_dir <-"./UCI HAR Dataset" #this is the directory where all data is to be found
+
+#unzip UCI HAR data files. If the directory "./UCI HAR Dataset" exist it will jump over this step and continue.
+
+if (file.exists(uci_har_dir)==FALSE) {
+          
+          t <- tempfile()
+          fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip" #Projects link to UCI HAR data file
+          
+          download.file(fileUrl,t,mode="wb")
+          
+          unzip(t)
+          unlink(t)
+}
 
 #Data files: names & locations
 
-activity_file <- "activity_labels.txt"
+activity_file <- file.path(uci_har_dir,"activity_labels.txt")
 activity <- read.table(activity_file,h=FALSE)
 names(activity)[1] <- "Label"
-names(activity)[2] <- "Activity"                #File containing the mapping of Label (i.e., y-files) with given Activity (e.g., Walk, Sitting, etc).
+names(activity)[2] <- "Activity"                       #File containing the mapping of Label (i.e., y-files) with given Activity (e.g., Walk, Sitting, etc).
 
-header_file <- "./features.txt"                 #File containing type of measurements corresponding to x-files.
+header_file <- file.path(uci_har_dir,"./features.txt") #File containing type of measurements corresponding to x-files.
 head_data <- read.table(header_file,h=FALSE)
 
-subj_test_file <-"./test/subject_test.txt"      #Subject carrying out Activity
-y_test_file <- "./test/y_test.txt"              #Labeled Activity
-x_test_file <- "./test/X_test.txt"              #Activity-based Measurements
+subj_test_file <-file.path(uci_har_dir,"./test/subject_test.txt")      #Subject carrying out Activity
+y_test_file <- file.path(uci_har_dir,"./test/y_test.txt")              #Labeled Activity
+x_test_file <- file.path(uci_har_dir,"./test/X_test.txt")              #Activity-based Measurements
 
-subj_train_file <-"./train/subject_train.txt"
-y_train_file <- "./train/y_train.txt"
-x_train_file <- "./train/X_train.txt"
+subj_train_file <-file.path(uci_har_dir,"./train/subject_train.txt")
+y_train_file <- file.path(uci_har_dir,"./train/y_train.txt")
+x_train_file <- file.path(uci_har_dir,"./train/X_train.txt")
+
 
 #Create a directory "results" where resulting files can be stored 
 results_dir <- "./results"
@@ -98,7 +117,7 @@ mean_std_xtra <- cbind(total_data[,3],mean_std_data);names(mean_std_xtra)[1]<-na
 mean_std_xtra <- cbind(total_data[,2],mean_std_xtra);names(mean_std_xtra)[1]<-names(total_data)[2] #adding back numeric activity id
 mean_std_xtra <- cbind(total_data[,1],mean_std_xtra);names(mean_std_xtra)[1]<-names(total_data)[1] #adding back descriptive activity
 
-write.csv(mean_std_xtra,"./results/mean_std_descriptive.csv")   #Project task #3 & #4 enriched with descriptive data
+write.csv(mean_std_xtra,"./results/mean_std_descriptive.csv")                         #Project task #3 & #4 enriched with descriptive data
 
 print("Appropriately labeled data set with descriptive variable names (ex: row 1-5 & col 1-6);")
 print(mean_std_xtra[1:5,1:6])
@@ -113,10 +132,7 @@ tidy_mean_std[,1] <- tmsx[,2] #re-arranging columns so Subject is 2nd column
 tidy_mean_std[,2] <- tmsx[,1] #re-arranging columns so Activity is 1st column
 
 names(tidy_mean_std)[1:2] <- c("Activity","Subject")
-write.table(tidy_mean_std,"./results/tidy_mean&std.txt",row.names=FALSE) #Project task #5 tidy dataset
-#first column Activity, second column Subject, third and so forth measurements.
+write.table(tidy_mean_std,"./results/tidy_mean&std.txt",row.names=FALSE)
 
 print("Tidy data set with the average of each variable for each activity and each subject (ex: row 25-35 & col 1-6);")
 print(tidy_mean_std[28:33,1:6])
-
-
