@@ -1,3 +1,4 @@
 # Code Book
 ## Course Project
-### Coursera's Getting & Cleaning Data (April 2015)
+### Getting and Cleaning Data (getdata-013)
+#### April 2015
