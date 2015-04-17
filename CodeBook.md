@@ -52,7 +52,7 @@ This section associate constants with the various UCI HAR Datasets as follows;
 
 In the following _test/train_ simply means that the code is the same whether the file comes from the `"./UCI HAR Dataset/test"` or the `"./UCI HAR Dataset/train"` directories. In the code itself it is of course either _test_ or _train_.  
 
-* `subj.test/trainFile` equals `"subject_test/train.txt"` that contains the Subject id (i.e., 1 to 30).
+* `subj.test/trainFile` equals `"subject_test/train.txt"` that contains the Subject id (i.e., a total of 30 subjects).
 * `y.test/trainFile` equals `"y_test/train.txt"` that contains activity label id.
 * `x.test/trainFile` equals `"x_test/train.txt"` containing all measurements identified by type in '"features.txt"`.
   
