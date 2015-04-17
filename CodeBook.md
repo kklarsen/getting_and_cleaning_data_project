@@ -96,19 +96,39 @@ The Project assignment requires to extract the UCI HAR means and standard deviat
 * `std.col` are the column numbers of columns representing standard deviation (i.e., __std__) measurements.  
 * `mean_std.data` uses `cbind()` function to bind together the __mean__ data and __std__ data by referencing the `mean.col` and `std.col` numbers above in the `x.data` data frame.
 
+The `mean_std.data` data frame is written to `"./results/mean_std_data.csv"` using the `write.csv()` function.
+
 __Note__ as the assignment does require us to reference the mean & std with the actual __Activity__ (i.e., not to be confused with the __Activity id__) this part of the code operates on the `x.data` rather than on the `totalData`. Below find two subsets/extracts of this data;
 
 ![Shows the mean & std data for 1:5 rows and 1:8 columns. This data extract does not capture the standard deviation data as their column numbers are further out](http://i.imgur.com/C46oxiZ.png)
 
+__Figure above__ shows the mean & std data for 1:5 rows and 1:8 columns. This data extract does not capture the standard deviation data as their column numbers are further out. The following picture does;
 
 ![Same data frame as above. Shows the mean & std data for 1:5 rows and 45:50 columns at the intersection between mean and std data columns.](http://i.imgur.com/eZw6Mqw.png)
 
+__Figure above__ comes from the same data frame as above. This shows the mean & std data for 1:5 rows and 45:50 columns at the intersection between mean and std data columns.
 
 * `mean_std.xtra` uses `cbind()` to add back __Subject__ id, numeric __Activity id__ and the descriptive __Activity__ identifier to the `mean_std.data` data frame.
-* 
 
+The `mean_std.xtra` data frame is written to `"./results/mean_std_descriptive.csv"`. For comparison with the above two see the following extract;
 
-#####WRITING PROJECT SPECIFIED TIDY FILE
+![](http://i.imgur.com/L1m7CS5.png)   
+__Figure above__ is similar to the two previous picture with exception of having __Activity__ characteristics, __Activity id__ and __Subject__ id added in the first 3 columns.
+
+#####PROJECT SPECIFIED TIDY FILE
+
+The final tidy data set, as required by the project, should take the mean of all _mean & standard deviation (i.e., std)_ __Measurement__ data for each __Subject__ and the subjects __Activity__. In other words, there should only be 1 row for each combination of __Activity__ and __Subject__. 
+
+* `len` is the length of the `mean_std.xtra`.
+* `tmsx` is the required data frame produced using the `aggregate(mean_std.xtra[],by = list(),mean)` function is very flexible in computing summary statistics of a pre-defined data subset. In this case, the subset is determined by the following grouping elements `mean_std.xtra$Subject`and `mean_std.xtra$Activity` which is added to `list()` and subject to statistical mean that is then applied to the subset.
+
+I prefer that the first column of data is the __Activity__ type, followed by the __Subject__ id and then the computed mean summary of the __Measurement__ columns subset. Thus, I need to switch the 1st and 2nd column of `tmsx`.
+
+* `tidy.mean`is the final tidy file as per this Projects requirement and looks the following for a small subset of overall tidy data frame (i.e., row 25 to 35 and column 1 to 6);
+
+![](http://i.imgur.com/iFrjwT8.png)
+
+Furthermore, the `tidy.mean` data frame is written to `"./results/tidy.mean.txt"`using the `write.table()` function with the argument `row.names = FALSE`.
 
 #####ACKNOWLEDGMENT
 ___Reference___: [_Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. A Public Domain Dataset for Human Activity Recognition Using Smartphones. 21th European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning, ESANN 2013. Bruges, Belgium 24-26 April 2013_.](https://www.elen.ucl.ac.be/Proceedings/esann/esannpdf/es2013-84.pdf)
