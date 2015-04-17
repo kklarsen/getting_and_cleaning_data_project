@@ -17,9 +17,9 @@ This repo contains one R-code script named `run_analysis.R`in line with the Proj
 7. Tidy the data-set (e.g., see also Hadley Wickham ["Tidy Data" article](http://vita.had.co.nz/papers/tidy-data.pdf)).
 8. Several files are written to the "results" directory along the data tidying process.
 
-__Note__: the requested final (tidy) file `tidy_mean&std.txt` can be found in the `"./results"` directory that was created by this code in your working directory.
+__Note__: the requested final (tidy) file `tidy_mean&std.txt` can be found in the `"./results"` directory that was created by this code in the working directory.
 
-My `codebook.md` will in more detail explain my R-code's functionality.
+My `codebook.md` will in more detail explain the R-code's functionality.
 
 ___Reference___: [_Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. A Public Domain Dataset for Human Activity Recognition Using Smartphones. 21th European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning, ESANN 2013. Bruges, Belgium 24-26 April 2013_.](https://www.elen.ucl.ac.be/Proceedings/esann/esannpdf/es2013-84.pdf)
 
