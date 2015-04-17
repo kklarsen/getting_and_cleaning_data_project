@@ -17,7 +17,7 @@ This repo contains one R-code script named `run_analysis.R`in line with the Proj
 7. Tidy the data-set (e.g., see also Hadley Wickham ["Tidy Data" article](http://vita.had.co.nz/papers/tidy-data.pdf)).
 8. Several files are written to the "results" directory along the data tidying process.
 
-__Note__: the requested final (tidy) file `tidy.mean.txt` can be found in the `"./results"` directory that was created by this code in the working directory.
+__Note__: the requested final (tidy) file `"tidy_mean.txt"` can be found in the `"./results"` directory that was created by this code in the working directory.
 
 My `codebook.md` will in more detail explain the R-code's functionality.
 
