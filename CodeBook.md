@@ -41,26 +41,74 @@ The UCI HAR zip-file extraction will create the following directory structure (i
 
 `file.exist(results_dir)` logic checks whether directory already exist. If the directory does not exist `dir.create(results_dir)` will create the directory. If the directory `"./results"` already exist the code jumps over this step and continues.
   
-#####CONSTANTS
+#####CONSTANTS & DEFINITIONS
   
 This section associate constants with the various UCI HAR Datasets as follows;
 
 * `activity.file` equals file path to and name of the dataset, i.e., `"activity_labels.txt"` to be found in `./"UCI HAR Dataset"`).
 * `activity`is a `data.frame` containing the data from `"activity_labels.txt"` and contains to columns `"Label"` id and the associated 6 types of "measured" activity `"Activity"` (i.e., 1 WALKING, 2 WALKING UPSTAIRS 3 WALKING DOWNSTAIRS 4 SITTING 5 STANDING and 6 LAYING).
 * `header.file` equals `"features.txt"`in `./"UCI HAR Dataset"`
-* `headData`is the `data.frame` read from `"features.txt"`, and contains all measurements related to _Subject_ and _Activity_.
+* `headData`is the `data.frame` read from `"features.txt"`, and contains all measurement descriptions related to _Subject_ and _Activity_.
 
 In the following _test/train_ simply means that the code is the same whether the file comes from the `"./UCI HAR Dataset/test"` or the `"./UCI HAR Dataset/train"` directories. In the code itself it is of course either _test_ or _train_.  
 
 * `subj.test/trainFile` equals `"subject_test/train.txt"` that contains the Subject id (i.e., a total of 30 subjects).
 * `y.test/trainFile` equals `"y_test/train.txt"` that contains activity label id.
-* `x.test/trainFile` equals `"x_test/train.txt"` containing all measurements identified by type in '"features.txt"`.
+* `x.test/trainFile` equals `"x_test/train.txt"` containing all measurements identified by type in `"features.txt"`.
+
+__Note__: `y.test/trainFile` should be read as `y.testFile` or `y.trainFile`.
   
 #####RETRIEVE THE DATA
 
+In this section the various UCI HAR datafiles are being loaded. `read.table()` is used to read the data files with `header=FALSE` included. column names are defined right after the data has been read using the `names()` function(e.g., `names(subj.testData) <- "Subject"`).
+
+* `subj.test/trainData` reads the measurement descriptions from `subj.test/trainFile` into a data frame (DF).
+* `y.test/trainData` reads the activity (numeric) labels from `y.test/trainFile` into a DF.
+* `x.test/trainData` reads the actual (numeric) measurements data from `x.test/trainFile` into a DF.
+
+All `*Data` representing the content of the data are data frame formats. 
+ 
+__Note__: `subj.test/trainData` should be read as `subj.testFile` or `subj.trainFile`.
+
 #####DATA RESHAPING & TIDYING
+My overall strategy with this part of the code, is to end up with one data frame containing all the information from the UCI HAR Datafile which uniquely identifies the measurement data (i.e., `"x.test/train.txt"`) with __Activity Measurement__ types (i.e., `"features.txt"`), __Subject id__ (i.e., `"subject_test/train.txt"`) and the specific activity carried out by the subject (i.e., `"y.test/train.txt"` and `"activity_labels.txt"`)
+
+For most of the data reshaping the `"run_analysis.R"` code uses `rbind()` and `cbind()` functions, that combines a sequences of data frames by row or column, respectively.
+
+* `x.test/trainData` uses `cbind()` to combine __Subject__ data column with the __Measurement__ data. Note that the element is being re-defined from only containing the __Measurement__ data to also including the __Subject id__ column.
+* `x.data` uses `rbind()` to append `x.trainData` to the end of `x.testData` with the result of having a complete data frame containing the __Subject Ids__ and the associated activity __Measurements__.
+* `y.data` uses `rbind()` to append `y.trainData` to the end of `y.testData` with the result of having a complete data frame containing the __Activity Ids__.
+* `yx.data` uses `cbind()` to combine __Activity Ids__ data with the __Subject__ and __Measurement__ data
+* `activityData` is a data frame that maps the given (numeric) activity id to the actual descriptive activity.
+* `totalData'` uses `cbind()` to combine the descriptive activity data frame (i.e., `activityData`) with the `yx.data` data frame. Further, I need to re-name the added __Activity__ column in the `yx.data` to `Activity`.
+
+In principle the `totalData` is a tidy data frame comprising the whole UCI HAR dataset. Following shows a subset/extract (i.e., 1:5 rows and 1:11 columns) of the `totalData` data frame;
+
+![](http://i.imgur.com/h8abV2A.jpg)
+
+Showing the first column as __Activity__, 2nd activity __Label__, 3rd the __Subject__ id, 4 - end are __Measurements__ corresponding to the Subject, Subjects Activity and the related activity Label.
+
+#####DATA SUBSET ONLY CONTAINING MEAN & STANDARD DEVIATION (STD) MEASUREMENTS 
+
+The Project assignment requires to extract the UCI HAR means and standard deviation measurements. For this part I have used the `grep(pattern, x, ignore.case=FALSE)` function which  searches in `x` elements matching the `pattern` (i.e., `"mean"` or `"std"`). __Note__ that `ignore.case` is `FALSE`. Thus, in this case, the ` grep()` function will only search for matching patterns in `LOWERCASE`. The reason is that there are other activity measurements that have "Mean" in their name-string (e.g., ` angle(tBodyAccMean,gravity)`). However those specific measurements are __NOT__ mean measurements but functional outputs (e.g., `angle()`) of a __mean__ measurement input (e.g., `tBodyAccMean`).
+
+* `mean.col` are the column numbers of columns representing __mean__ measurements.
+* `std.col` are the column numbers of columns representing standard deviation (i.e., __std__) measurements.  
+* `mean_std.data` uses `cbind()` function to bind together the __mean__ data and __std__ data by referencing the `mean.col` and `std.col` numbers above in the `x.data` data frame.
+
+__Note__ as the assignment does require us to reference the mean & std with the actual __Activity__ (i.e., not to be confused with the __Activity id__) this part of the code operates on the `x.data` rather than on the `totalData`. Below find two subsets/extracts of this data;
+
+![Shows the mean & std data for 1:5 rows and 1:8 columns. This data extract does not capture the standard deviation data as their column numbers are further out](http://i.imgur.com/C46oxiZ.png)
+
+
+![Same data frame as above. Shows the mean & std data for 1:5 rows and 45:50 columns at the intersection between mean and std data columns.](http://i.imgur.com/eZw6Mqw.png)
+
+
+* `mean_std.xtra` uses `cbind()` to add back __Subject__ id, numeric __Activity id__ and the descriptive __Activity__ identifier to the `mean_std.data` data frame.
+* 
+
 
 #####WRITING PROJECT SPECIFIED TIDY FILE
 
-#####AKNOWLEDGEMENT
+#####ACKNOWLEDGMENT
 ___Reference___: [_Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. A Public Domain Dataset for Human Activity Recognition Using Smartphones. 21th European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning, ESANN 2013. Bruges, Belgium 24-26 April 2013_.](https://www.elen.ucl.ac.be/Proceedings/esann/esannpdf/es2013-84.pdf)
