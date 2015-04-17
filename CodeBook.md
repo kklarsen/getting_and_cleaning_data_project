@@ -17,7 +17,7 @@ The flow of the code follows naturally from Top to Bottom. However, explainatory
 * Define the data directories and file related constants.
 * Download and read the data files.
 * Data reshaping & tidying.
-* Write the in the project specified tidy dataset `"tidy_mean&std.txt"`to `"./results"` directory.
+* Write the in the project specified tidy dataset `"tidy.mean.txt"`to `"./results"` directory.
   
 
 #####RETRIEVE UCI HAR DATASET
@@ -94,9 +94,9 @@ The Project assignment requires to extract the UCI HAR means and standard deviat
 
 * `mean.col` are the column numbers of columns representing __mean__ measurements.
 * `std.col` are the column numbers of columns representing standard deviation (i.e., __std__) measurements.  
-* `mean_std.data` uses `cbind()` function to bind together the __mean__ data and __std__ data by referencing the `mean.col` and `std.col` numbers above in the `x.data` data frame.
+* `mean.std.data` uses `cbind()` function to bind together the __mean__ data and __std__ data by referencing the `mean.col` and `std.col` numbers above in the `x.data` data frame.
 
-The `mean_std.data` data frame is written to `"./results/mean_std_data.csv"` using the `write.csv()` function.
+The `mean.std.data` data frame is written to `"./results/mean_std_data.csv"` using the `write.csv()` function.
 
 __Note__ as the assignment does require us to reference the mean & std with the actual __Activity__ (i.e., not to be confused with the __Activity id__) this part of the code operates on the `x.data` rather than on the `totalData`. Below find two subsets/extracts of this data;
 
@@ -108,9 +108,9 @@ __Figure above__ shows the mean & std data for 1:5 rows and 1:8 columns. This da
 
 __Figure above__ comes from the same data frame as above. This shows the mean & std data for 1:5 rows and 45:50 columns at the intersection between mean and std data columns.
 
-* `mean_std.xtra` uses `cbind()` to add back __Subject__ id, numeric __Activity id__ and the descriptive __Activity__ identifier to the `mean_std.data` data frame.
+* `mean.std.xtra` uses `cbind()` to add back __Subject__ id, numeric __Activity id__ and the descriptive __Activity__ identifier to the `mean.std.data` data frame.
 
-The `mean_std.xtra` data frame is written to `"./results/mean_std_descriptive.csv"`. For comparison with the above two see the following extract;
+The `mean.std.xtra` data frame is written to `"./results/mean_std_descriptive.csv"`. For comparison with the above two see the following extract;
 
 ![](http://i.imgur.com/L1m7CS5.png)   
 __Figure above__ is similar to the two previous picture with exception of having __Activity__ characteristics, __Activity id__ and __Subject__ id added in the first 3 columns.
@@ -119,8 +119,8 @@ __Figure above__ is similar to the two previous picture with exception of having
 
 The final tidy data set, as required by the project, should take the mean of all _mean & standard deviation (i.e., std)_ __Measurement__ data for each __Subject__ and the subjects __Activity__. In other words, there should only be 1 row for each combination of __Activity__ and __Subject__. 
 
-* `len` is the length of the `mean_std.xtra`.
-* `tmsx` is the required data frame produced using the `aggregate(mean_std.xtra[],by = list(),mean)` function is very flexible in computing summary statistics of a pre-defined data subset. In this case, the subset is determined by the following grouping elements `mean_std.xtra$Subject`and `mean_std.xtra$Activity` which is added to `list()` and subject to statistical mean that is then applied to the subset.
+* `len` is the length of the `mean.std.xtra`.
+* `tmsx` is the required data frame produced using the `aggregate(mean.std.xtra[], by = list(), mean)` function is very flexible in computing summary statistics of a pre-defined data subset. In this case, the subset is determined by the following grouping elements `mean.std.xtra$Subject`and `mean.std.xtra$Activity` which is added to `list()` and subject to statistical mean that is then applied to the subset.
 
 I prefer that the first column of data is the __Activity__ type, followed by the __Subject__ id and then the computed mean summary of the __Measurement__ columns subset. Thus, I need to switch the 1st and 2nd column of `tmsx`.
 
