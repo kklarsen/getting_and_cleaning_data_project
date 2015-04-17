@@ -10,11 +10,11 @@
 #RETRIEVE UCI HAR (HUMAN ACTIVITY RECOGNITION)DATASET
 ##Define UCI HAR Dataset directory
 
-uci_har_dir <-"./UCI HAR Dataset" #this is the directory where all data is to be found
+uci.harDir <-"./UCI HAR Dataset" #this is the directory where all data is to be found
 
 ##unzip UCI HAR data files unless the uci_har_dir already exists
 
-if (file.exists(uci_har_dir)==FALSE) {
+if (file.exists(uci.harDir)==FALSE) {
           
           t <- tempfile()
           fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip" #Projects link to UCI HAR data file
@@ -28,116 +28,116 @@ if (file.exists(uci_har_dir)==FALSE) {
 #RESULTS DIRECTORY
 ##Create a directory "results" where resulting files can be stored 
 
-results_dir <- "./results"
-if (file.exists(results_dir)==FALSE) dir.create(results_dir)
+resultsDir <- "./results"
+if (file.exists(resultsDir)==FALSE) dir.create(resultsDir)
 
 #CONSTANTS & DEFINITIONS
 ##UCI HAR dataset files: names & locations
 
-activity_file <- file.path(uci_har_dir,"activity_labels.txt")
-activity <- read.table(activity_file,h=FALSE)
+activity.file <- file.path(uci.harDir,"activity_labels.txt")
+activity <- read.table(activity.file,h=FALSE)
 names(activity)[1] <- "Label"
 names(activity)[2] <- "Activity"                       #File containing the mapping of Label (i.e., y-files) with given Activity (e.g., Walk, Sitting, etc).
 
-header_file <- file.path(uci_har_dir,"./features.txt") #File containing type of measurements corresponding to x-files.
-head_data <- read.table(header_file,h=FALSE)
+header.file <- file.path(uci.harDir,"./features.txt") #File containing type of measurements corresponding to x-files.
+headData <- read.table(header.file,h=FALSE)
 
-subj_test_file <-file.path(uci_har_dir,"./test/subject_test.txt")      #Subject carrying out Activity
-y_test_file <- file.path(uci_har_dir,"./test/y_test.txt")              #Labeled Activity
-x_test_file <- file.path(uci_har_dir,"./test/X_test.txt")              #Activity-based Measurements
+subj.testFile <-file.path(uci.harDir,"./test/subject_test.txt")      #Subject carrying out Activity
+y.testFile <- file.path(uci.harDir,"./test/y_test.txt")              #Labeled Activity
+x.testFile <- file.path(uci.harDir,"./test/X_test.txt")              #Activity-based Measurements
 
-subj_train_file <-file.path(uci_har_dir,"./train/subject_train.txt")
-y_train_file <- file.path(uci_har_dir,"./train/y_train.txt")
-x_train_file <- file.path(uci_har_dir,"./train/X_train.txt")
+subj.trainFile <-file.path(uci.harDir,"./train/subject_train.txt")
+y.trainFile <- file.path(uci.harDir,"./train/y_train.txt")
+x.trainFile <- file.path(uci.harDir,"./train/X_train.txt")
 
 #RETRIEVE THE DATA FROM THE UCI HAR DATASET
 ## Test Data Set:
 ## 1. add headers to x test data
 
-subj_test_data <- read.table(subj_test_file,h=FALSE)
-names(subj_test_data) <- "Subject"
-x_test_data <- read.table(x_test_file,h=FALSE)
-names(x_test_data) <- head_data[,2]
+subj.testData <- read.table(subj.testFile,h=FALSE)
+names(subj.testData) <- "Subject"
+x.testData <- read.table(x.testFile,h=FALSE)
+names(x.testData) <- headData[,2]
 
 ## Train Data Set:
 ## 1. add headers to x train data
 
-subj_train_data <- read.table(subj_train_file,h=FALSE)
-names(subj_train_data) <- "Subject"
-x_train_data <- read.table(x_train_file,h=FALSE)
-names(x_train_data) <- head_data[,2]
+subj.trainData <- read.table(subj.trainFile,h=FALSE)
+names(subj.trainData) <- "Subject"
+x.trainData <- read.table(x.trainFile,h=FALSE)
+names(x.trainData) <- headData[,2]
 
 #DATA RESHAPING & TIDYING
 
-x_test_data <- cbind(subj_test_data,x_test_data)
-x_train_data <- cbind(subj_train_data,x_train_data)
+x.testData <- cbind(subj.testData,x.testData)
+x.trainData <- cbind(subj.trainData,x.trainData)
 
 ## 2. append train to test to data (i.e., test data first and then after comes the train data)
 ##   Write the full file to "results" directory as .csv file. 
 
-x_data <- rbind(x_test_data,x_train_data)
+x.data <- rbind(x.testData,x.trainData)
 
 ## This writes a csv file format with including
 ## Coloumn 1: Subject
 ## Coloumn 2... :Measurement data contained in x-files.
 ## Descriptive Headers added for each of the measurement coloumns (i.e., Features-file)
 
-write.csv(x_data,"./results/test&train_data.csv")  #Project task #1
+write.csv(x.data,"./results/test&train_data.csv")  #Project task #1
 
 ## 3. Adding numric & descriptive activity labels to the data;
 
-y_test_data <- read.table(y_test_file,h=FALSE)
-names(y_test_data) <- "Label"
-y_train_data <- read.table(y_train_file,h=FALSE)
-names(y_train_data) <- "Label"
-y_data <- rbind(y_test_data,y_train_data)
+y.testData <- read.table(y.testFile,h=FALSE)
+names(y.testData) <- "Label"
+y.trainData <- read.table(y.trainFile,h=FALSE)
+names(y.trainData) <- "Label"
+y.data <- rbind(y.testData,y.trainData)
 
-yx_data <- cbind(y_data,x_data)
+yx.data <- cbind(y.data,x.data)
 
-len <- length(yx_data[,1])
+len <- length(yx.data[,1])
 
-activity_data <- data.frame(1:len,1)
-activity_data <- activity[yx_data[,1],2]
+activityData <- data.frame(1:len,1)
+activityData <- activity[yx.data[,1],2]
 
-total_data <- cbind(activity_data,yx_data)
-names(total_data)[1]<-"Activity"
+totalData <- cbind(activityData,yx.data)
+names(totalData)[1]<-"Activity"
 
-write.csv(total_data,"./results/total_data_descriptive.csv") #Project tasks #1 enriched
+write.csv(totalData,"./results/total_data_descriptive.csv") #Project tasks #1 enriched
 
 ### print("Total data file (ex: row 1-5 & col 1-6);")
-### print(total_data[1:5,1:8])
+### print(totalData[1:5,1:8])
 
 # 4. find data columns of categorized as mean and standard deviation (i.e., std)
-mean_col <- grep("mean",names(x_data)) #finding subset of data categorized as mean
-std_col <- grep("std",names(x_data)) #finding subset of data categorized as std (i.e., standard deviation)
+mean.col <- grep("mean",names(x.data)) #finding subset of data categorized as mean
+std.col <- grep("std",names(x.data)) #finding subset of data categorized as std (i.e., standard deviation)
 
-mean_std_data <- cbind(x_data[mean_col],x_data[std_col],type="left")
-write.csv(mean_std_data,"./results/mean_std_data.csv") #Project task #2
+mean_std.data <- cbind(x.data[mean.col],x.data[std.col],type="left")
+write.csv(mean_std.data,"./results/mean_std_data.csv") #Project task #2
 
 ### print("Measurements on the mean and standard deviation for each measurement (ex: row 1-5 & col 1-6);")
-### print(mean_std_data[1:5,1:6])
+### print(mean_std.data[1:5,1:6])
 
-mean_std_xtra <- cbind(total_data[,3],mean_std_data);names(mean_std_xtra)[1]<-names(total_data)[3] #adding back Subject
-mean_std_xtra <- cbind(total_data[,2],mean_std_xtra);names(mean_std_xtra)[1]<-names(total_data)[2] #adding back numeric activity id
-mean_std_xtra <- cbind(total_data[,1],mean_std_xtra);names(mean_std_xtra)[1]<-names(total_data)[1] #adding back descriptive activity
+mean_std.xtra <- cbind(totalData[,3],mean_std.data);names(mean_std.xtra)[1]<-names(totalData)[3] #adding back Subject
+mean_std.xtra <- cbind(totalData[,2],mean_std.xtra);names(mean_std.xtra)[1]<-names(totalData)[2] #adding back numeric activity id
+mean_std.xtra <- cbind(totalData[,1],mean_std.xtra);names(mean_std.xtra)[1]<-names(totalData)[1] #adding back descriptive activity
 
-write.csv(mean_std_xtra,"./results/mean_std_descriptive.csv") #Project task #3 & #4 enriched with descriptive data
+write.csv(mean_std.xtra,"./results/mean_std_descriptive.csv") #Project task #3 & #4 enriched with descriptive data
 
 ### print("Appropriately labeled data set with descriptive variable names (ex: row 1-5 & col 1-6);")
-### print(mean_std_xtra[1:5,1:6])
+### print(mean_std.xtra[1:5,1:6])
 
 #WRITING PROJECT SPECIFIED TIDY FILE
 ## 5. Final Tidy up of data
 
-len <- length(mean_std_xtra)
-tmsx <-aggregate(mean_std_xtra[,4:(len-1)],list(mean_std_xtra$Subject,mean_std_xtra$Activity),mean)
+len <- length(mean_std.xtra)
+tmsx <-aggregate(mean_std.xtra[,4:(len-1)],list(mean_std.xtra$Subject,mean_std.xtra$Activity),mean)
 
-tidy_mean_std <- tmsx
-tidy_mean_std[,1] <- tmsx[,2] #re-arranging columns so Subject is 2nd column
-tidy_mean_std[,2] <- tmsx[,1] #re-arranging columns so Activity is 1st column
+tidy.mean_std <- tmsx
+tidy.mean_std[,1] <- tmsx[,2] #re-arranging columns so Subject is 2nd column
+tidy.mean_std[,2] <- tmsx[,1] #re-arranging columns so Activity is 1st column
 
-names(tidy_mean_std)[1:2] <- c("Activity","Subject")
-write.table(tidy_mean_std,"./results/tidy_mean&std.txt",row.names=FALSE)
+names(tidy.mean_std)[1:2] <- c("Activity","Subject")
+write.table(tidy.mean_std,"./results/tidy_mean&std.txt",row.names=FALSE)
 
 print("Tidy data set with the average of each variable for each activity and each subject (ex: row 25-35 & col 1-6);")
-print(tidy_mean_std[25:35,1:6])
+print(tidy.mean_std[25:35,1:6])
