@@ -128,7 +128,7 @@ I prefer that the first column of data is the __Activity__ type, followed by the
 
 ![](http://i.imgur.com/iFrjwT8.png)
 
-Furthermore, the `tidy.mean` data frame is written to `"./results/tidy.mean.txt"`using the `write.table()` function with the argument `row.names = FALSE`.
+Furthermore, the `tidy.mean` data frame is written to `"./results/tidy_mean.txt"`using the `write.table()` function with the argument `row.names = FALSE`.
 
 #####ACKNOWLEDGMENT
 ___Reference___: [_Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. A Public Domain Dataset for Human Activity Recognition Using Smartphones. 21th European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning, ESANN 2013. Bruges, Belgium 24-26 April 2013_.](https://www.elen.ucl.ac.be/Proceedings/esann/esannpdf/es2013-84.pdf)
