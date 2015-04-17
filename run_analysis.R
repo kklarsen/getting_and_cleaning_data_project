@@ -52,45 +52,47 @@ x.trainFile <- file.path(uci.harDir,"./train/X_train.txt")
 
 #RETRIEVE THE DATA FROM THE UCI HAR DATASET
 ## Test Data Set:
-## 1. add headers to x test data
+## load test subjects id data
+## load test activity labels y
+## add headers to x test data
 
 subj.testData <- read.table(subj.testFile,h=FALSE)
 names(subj.testData) <- "Subject"
+
+y.testData <- read.table(y.testFile,h=FALSE)
+names(y.testData) <- "Label"
+
 x.testData <- read.table(x.testFile,h=FALSE)
 names(x.testData) <- headData[,2]
 
 ## Train Data Set:
-## 1. add headers to x train data
+## load train subjects id data
+## load train activity labels y
+## add headers to x train data
 
 subj.trainData <- read.table(subj.trainFile,h=FALSE)
 names(subj.trainData) <- "Subject"
+
+y.trainData <- read.table(y.trainFile,h=FALSE)
+names(y.trainData) <- "Label"
+
 x.trainData <- read.table(x.trainFile,h=FALSE)
 names(x.trainData) <- headData[,2]
+
 
 #DATA RESHAPING & TIDYING
 
 x.testData <- cbind(subj.testData,x.testData)
 x.trainData <- cbind(subj.trainData,x.trainData)
 
-## 2. append train to test to data (i.e., test data first and then after comes the train data)
-##   Write the full file to "results" directory as .csv file. 
+## Append train to test to data (i.e., test data first and then after comes the train data)
 
 x.data <- rbind(x.testData,x.trainData)
+y.data <- rbind(y.testData,y.trainData)
 
 ## This writes a csv file format with including
-## Coloumn 1: Subject
-## Coloumn 2... :Measurement data contained in x-files.
-## Descriptive Headers added for each of the measurement coloumns (i.e., Features-file)
 
 write.csv(x.data,"./results/test&train_data.csv")  #Project task #1
-
-## 3. Adding numric & descriptive activity labels to the data;
-
-y.testData <- read.table(y.testFile,h=FALSE)
-names(y.testData) <- "Label"
-y.trainData <- read.table(y.trainFile,h=FALSE)
-names(y.trainData) <- "Label"
-y.data <- rbind(y.testData,y.trainData)
 
 yx.data <- cbind(y.data,x.data)
 
@@ -107,7 +109,8 @@ write.csv(totalData,"./results/total_data_descriptive.csv") #Project tasks #1 en
 ### print("Total data file (ex: row 1-5 & col 1-6);")
 ### print(totalData[1:5,1:8])
 
-# 4. find data columns of categorized as mean and standard deviation (i.e., std)
+#DATA SUBSET ONLY CONTAINING MEAN & STANDARD DEVIATION (STD) MEASUREMENTS
+
 mean.col <- grep("mean",names(x.data)) #finding subset of data categorized as mean
 std.col <- grep("std",names(x.data)) #finding subset of data categorized as std (i.e., standard deviation)
 
@@ -126,8 +129,8 @@ write.csv(mean_std.xtra,"./results/mean_std_descriptive.csv") #Project task #3 &
 ### print("Appropriately labeled data set with descriptive variable names (ex: row 1-5 & col 1-6);")
 ### print(mean_std.xtra[1:5,1:6])
 
-#WRITING PROJECT SPECIFIED TIDY FILE
-## 5. Final Tidy up of data
+# WRITING PROJECT SPECIFIED TIDY FILE
+## Final Tidy up of data
 
 len <- length(mean_std.xtra)
 tmsx <-aggregate(mean_std.xtra[,4:(len-1)],list(mean_std.xtra$Subject,mean_std.xtra$Activity),mean)
