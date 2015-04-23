@@ -122,7 +122,7 @@ write.csv(mean.std.data, "./results/mean_std_data.csv") #Project task #2
 ### print(mean_std.data[1:5,1:6])
 
 mean.std.xtra <- cbind(totalData[, 3], mean.std.data); names(mean.std.xtra)[1] <- names(totalData)[3] #adding back Subject
-mean.std.xtra <- cbind(totalData[, 2], mean.std.xtra); names(mean.std.xtra)[1] <- names(totalData)[2] #adding back Subject
+mean.std.xtra <- cbind(totalData[, 2], mean.std.xtra); names(mean.std.xtra)[1] <- names(totalData)[2] #ad25:45ding back Subject
 mean.std.xtra <- cbind(totalData[, 1], mean.std.xtra); names(mean.std.xtra)[1] <- names(totalData)[1] #adding back descriptive Activity
 
 # write.csv(mean.std.xtra, "./results/mean_std_descriptive.csv") #Project task #3 & #4 enriched with descriptive data
@@ -146,4 +146,5 @@ write.table(tidy.mean,"./results/tidy_mean.txt",row.names=FALSE)
 
 print("Tidy data set with the average of each variable for each activity and each subject (ex: row 25-35 & col 1-6);")
 print(tidy.mean[25:35, 1:6])
+print("Dimension of tidy dataset: ");print(dim(tidy.mean))
 
