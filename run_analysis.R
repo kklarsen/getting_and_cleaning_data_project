@@ -57,6 +57,7 @@ x.trainFile <- file.path(uci.harDir, "./train/X_train.txt")
 ## add headers to x test data
 
 subj.testData <- read.table(subj.testFile, h=FALSE)
+
 names(subj.testData) <- "Subject"
 
 y.testData <- read.table(y.testFile, h=FALSE)
@@ -104,7 +105,7 @@ activityData <- activity[yx.data[, 1], 2]
 totalData <- cbind(activityData, yx.data)
 names(totalData)[1]<-"Activity"
 
-write.csv(totalData, "./results/total_data_descriptive.csv") #Project tasks #1 enriched
+# write.csv(totalData, "./results/total_data_descriptive.csv") #Project tasks #1 enriched
 
 ### print("Total data file (ex: row 1-5 & col 1-6);")
 ### print(totalData[1:5,1:8])
@@ -114,17 +115,17 @@ write.csv(totalData, "./results/total_data_descriptive.csv") #Project tasks #1 e
 mean.col <- grep("mean", names(x.data)) #finding subset of data categorized as mean
 std.col <- grep("std", names(x.data)) #finding subset of data categorized as std (i.e., standard deviation)
 
-mean.std.data <- cbind(x.data[mean.col], x.data[std.col], type="left")
+mean.std.data <- cbind(x.data[mean.col], x.data[std.col])
 write.csv(mean.std.data, "./results/mean_std_data.csv") #Project task #2
 
 ### print("Measurements on the mean and standard deviation for each measurement (ex: row 1-5 & col 1-6);")
 ### print(mean_std.data[1:5,1:6])
 
 mean.std.xtra <- cbind(totalData[, 3], mean.std.data); names(mean.std.xtra)[1] <- names(totalData)[3] #adding back Subject
-mean.std.xtra <- cbind(totalData[, 2], mean.std.xtra); names(mean.std.xtra)[1] <- names(totalData)[2] #adding back numeric activity id
-mean.std.xtra <- cbind(totalData[, 1], mean.std.xtra); names(mean.std.xtra)[1] <- names(totalData)[1] #adding back descriptive activity
+mean.std.xtra <- cbind(totalData[, 2], mean.std.xtra); names(mean.std.xtra)[1] <- names(totalData)[2] #adding back Subject
+mean.std.xtra <- cbind(totalData[, 1], mean.std.xtra); names(mean.std.xtra)[1] <- names(totalData)[1] #adding back descriptive Activity
 
-write.csv(mean.std.xtra, "./results/mean_std_descriptive.csv") #Project task #3 & #4 enriched with descriptive data
+# write.csv(mean.std.xtra, "./results/mean_std_descriptive.csv") #Project task #3 & #4 enriched with descriptive data
 
 ### print("Appropriately labeled data set with descriptive variable names (ex: row 1-5 & col 1-6);")
 ### print(mean_std.xtra[1:5,1:6])
@@ -134,7 +135,7 @@ write.csv(mean.std.xtra, "./results/mean_std_descriptive.csv") #Project task #3 
 ## Final Tidy up of data and showing the mean values only once mean per subject and per activity
 
 len <- length(mean.std.xtra)
-tmsx <- aggregate(mean.std.xtra[, 4:(len-1)], list(mean.std.xtra$Subject, mean.std.xtra$Activity), mean)
+tmsx <- aggregate(mean.std.xtra[, 4:len], list(mean.std.xtra$Subject, mean.std.xtra$Activity), mean)
 
 tidy.mean <- tmsx
 tidy.mean[, 1] <- tmsx[, 2] #re-arranging columns so Subject is 2nd column
