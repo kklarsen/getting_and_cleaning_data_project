@@ -136,11 +136,11 @@ The final tidy data set, as required by the project, should take the mean of all
 
 I prefer that the first column of data is the __Activity__ type, followed by the __Subject__ id and then the computed mean summary of the __Measurement__ columns subset. Thus, I need to switch the 1st and 2nd column of `tmsx`.
 
-* `tidy.mean`is the final tidy file as per this Projects requirement and looks the following for a small subset of overall tidy data frame (i.e., row 25 to 35 and column 1 to 6);
+* `tidy.mean`is the final tidy dataset as per this Projects requirement and looks the following for a small subset of overall tidy data frame (i.e., row 25 to 35 and column 1 to 6);
 
 ![](http://i.imgur.com/iFrjwT8.png)
 
-Furthermore, the `tidy.mean` data frame is written to `"./results/tidy.mean.txt"`using the `write.table()` function with the argument `row.names = FALSE`.
+Furthermore, the `tidy.mean` data frame is written to `"./results/tidy_mean.txt"`using the `write.table()` function with the argument `row.names = FALSE`.
 
 `dim(tidy.mean)`gives us 180 rows (i.e., 6 activities for 30 unique subjects) and 81 columns (i.e., 1 for __Activity__, 1 for __Subject__ and 79 unique __mean__ + __std__ measurements columns) as explained in the __DIMENSIONS & EXPECTATIONS__ section above.
 
