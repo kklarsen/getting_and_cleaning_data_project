@@ -35,6 +35,18 @@ The UCI HAR zip-file extraction will create the following directory structure (i
     
   __Note__: in both _test_ and _train_ subdirectories an additional directory is created names "Inertial Signals". For this project, the data stored in the "Inertial Signals" directories are not being used.
 
+#####DIMENSIONS & EXPECTATIONS
+
+* 30 __Subjects__ under test (an observation).
+* 6 different __Activities__ the above Subjects were subjected to (an observation).
+* 561 different kind of measurements collected (the variables).
+* 79 measurements are of the types __mean__ and __std__ (i.e., standard deviation).
+* 10,299 (i.e., 2,947 from test & 7,352 from train data) __observations__, consisting of combinations of Subject & Subject's Activity.
+
+Note using `distinct()`from the `dplyr` package (i.e., `library(dplyr)`) it can be shown that all 79 columns of __mean__ and __std__ are unique.
+
+For the final tidy dataset result we should expect 81 columns (i.e., 2 + 79) consisting of 1 __Activity__ column, 1 __Subject__ column and 79 columns representing the unique __mean__ and __std__ meaurement variables. Further, with 30 subject's and 6 different kind of activities one should expect to see 180 rows of observations. 
+
 #####RESULT DIRECTORY
   
 `resultsDir`defines the "results" directory `"./results"` in which intermediate and final results will be written to.`"./results`" will be created in the working directory.
@@ -120,7 +132,7 @@ __Figure above__ is similar to the two previous picture with exception of having
 The final tidy data set, as required by the project, should take the mean of all _mean & standard deviation (i.e., std)_ __Measurement__ data for each __Subject__ and the subjects __Activity__. In other words, there should only be 1 row for each combination of __Activity__ and __Subject__. 
 
 * `len` is the length of the `mean.std.xtra`.
-* `tmsx` is the required data frame produced using the `aggregate(mean.std.xtra[], by = list(), mean)` function is very flexible in computing summary statistics of a pre-defined data subset. In this case, the subset is determined by the following grouping elements `mean.std.xtra$Subject`and `mean.std.xtra$Activity` which is added to `list()` and subject to statistical mean that is then applied to the subset.
+* `tmsx` is the required data frame produced using the `aggregate(mean_std.xtra[],by = list(),mean)` function is very flexible in computing summary statistics of a pre-defined data subset. In this case, the subset is determined by the following grouping elements `mean.std.xtra$Subject`and `mean.std.xtra$Activity` which is added to `list()` and subject to statistical mean that is then applied to the subset.
 
 I prefer that the first column of data is the __Activity__ type, followed by the __Subject__ id and then the computed mean summary of the __Measurement__ columns subset. Thus, I need to switch the 1st and 2nd column of `tmsx`.
 
@@ -128,7 +140,9 @@ I prefer that the first column of data is the __Activity__ type, followed by the
 
 ![](http://i.imgur.com/iFrjwT8.png)
 
-Furthermore, the `tidy.mean` data frame is written to `"./results/tidy_mean.txt"`using the `write.table()` function with the argument `row.names = FALSE`.
+Furthermore, the `tidy.mean` data frame is written to `"./results/tidy.mean.txt"`using the `write.table()` function with the argument `row.names = FALSE`.
+
+`dim(tidy.mean)`gives us 180 rows (i.e., 6 activities for 30 unique subjects) and 81 columns (i.e., 1 for __Activity__, 1 for __Subject__ and 79 unique __mean__ + __std__ measurements columns) as explained in the __DIMENSIONS & EXPECTATIONS__ section above.
 
 #####ACKNOWLEDGMENT
 ___Reference___: [_Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. A Public Domain Dataset for Human Activity Recognition Using Smartphones. 21th European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning, ESANN 2013. Bruges, Belgium 24-26 April 2013_.](https://www.elen.ucl.ac.be/Proceedings/esann/esannpdf/es2013-84.pdf)
